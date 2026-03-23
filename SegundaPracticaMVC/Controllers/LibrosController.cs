@@ -52,11 +52,48 @@ namespace PracticaMvcCore2ACV.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> VerCarrito(int? ideliminar)
+        {
+            List<int> idsLibrosList = HttpContext.Session.GetObject<List<int>>("IDSLIBROSLIST");
+            if(idsLibrosList == null)
+            {
+                ViewData["MENSAJE"] = "No existen Libros en Carrito";
+                return View();
+            }
+            else
+            {
+                if (ideliminar != null)
+                {
+                    idsLibrosList.Remove(ideliminar.Value);
+                    if(idsLibrosList.Count == 0)
+                    {
+                        HttpContext.Session.Remove("IDSLIBROSLIST");
+                        return View();
+                    }
+                    else
+                    {
+                        //ACTUALIZAMOS SESSION
+                        HttpContext.Session.SetObject("IDSLIBROSLIST", idsLibrosList);
+                    }
+                }
+                List<Libros> libros = await this.repo.GetLibrosCarritoAsync(idsLibrosList);
+                return View(libros);
+            }
+        }
+
         [AuthorizeUser]
         public async Task<IActionResult> PerfilUser()
         {
             return View();
         }
 
+        [AuthorizeUser]
+        public async Task<IActionResult> FinalizarCompra()
+        {
+            List<VistaPedidos> pedidos = await this.repo.VerPedidosAsync(HttpContext.Session.GetObject<Usuarios>("USER").IdUsuario);
+
+            return View(pedidos);
+        }
     }
 }

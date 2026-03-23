@@ -10,6 +10,6 @@ namespace PracticaMvcCore2ACV.Data
         public DbSet<Generos> Generos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
-        public DbSet<VistaPedidos> VistaPedidos { get; set; }
+        public DbSet<VistaPedidos> VistasPedidos { get; set; }
     }
 }

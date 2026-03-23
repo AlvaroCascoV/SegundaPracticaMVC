@@ -1,0 +1,54 @@
+﻿@model List<VistaPedidos>
+<h1>PEDIDOS</h1>
+
+@if(Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    iduser
+                </th>
+                <th>
+                    nombre completo
+                </th>
+                <th>
+                    Libro
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th>
+                    IMG
+                </th>
+                <th>
+                    Fecha
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+            <tr>
+                <td>
+                     @item.IdVista
+                </td>
+                <td>
+                    @item.Nombre @item.Apellidos
+                </td>
+                <td>
+                    @item.Titulo
+                </td>
+                <td>
+                    @item.Precio
+                </td>
+                <td>
+                    <img src="~/images/@item.Portada" style="height:150px" />
+                </td>
+                <td>
+                        @item.Fecha
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
