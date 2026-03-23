@@ -1,4 +1,4 @@
-namespace SegundaPracticaMVC.Models
+namespace PracticaMvcCore2ACV.Models
 {
     public class ErrorViewModel
     {

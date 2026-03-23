@@ -1,0 +1,33 @@
+﻿
+@{
+    List<int> ids = Context.Session.GetObject<List<int>>("IDSLIBROSLIST");
+}
+
+@if (ids != null)
+{
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                LibrosCarrito: @ids.Count
+            </li>
+        </ul>
+    </div>
+}
+@if (Context.User.Identity.IsAuthenticated == false)
+{
+    <li class="nav-link text-info">
+        <a class="nav-link text-dark" asp-controller="Managed" asp-action="Login">Log In</a>
+    </li>
+}
+else
+{
+    <li class="nav-link text-info border-end border-2 border-black">
+        <a class="nav-link text-dark" asp-controller="Managed" asp-action="Logout">Cerrar Sesión <span style="color:blue">@Context.User.Identity.Name</span></a>
+    </li>
+    <li class="nav-link text-info border-end border-2 border-black">
+        <a class="nav-link text-dark" asp-controller="Libros" asp-action="PerfilUser">Perfil</a>
+    </li>
+    <li class="nav-link text-info border-end border-2 border-black">
+        <a class="nav-link text-dark" asp-controller="Libros" asp-action="Pedidos">Pedidos</a>
+    </li>
+}

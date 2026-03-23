@@ -1,6 +1,8 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using SegundaPracticaMVC.Models;
+using PracticaMvcCore2ACV.Models;
+using PracticaMvcCore2ACV.Repositories;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SegundaPracticaMVC.Controllers
 {
