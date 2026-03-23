@@ -51,14 +51,11 @@ namespace PracticaMvcCore2ACV.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     userPrincipal);
 
-                    string controller = "Home";
-                    string action = "Index";
-                
-
+                string controller = TempData["controller"].ToString();
+                string action = TempData["action"].ToString();
                 if (TempData["id"] != null)
                 {
                     string id = TempData["id"].ToString();
-
                     return RedirectToAction(action, controller, new { id = id });
                 }
                 else

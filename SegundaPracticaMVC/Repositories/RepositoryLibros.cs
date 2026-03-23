@@ -56,13 +56,17 @@ namespace PracticaMvcCore2ACV.Repositories
             return pedidos;
         }
 
-        public async Task InsertPedido(List<int> idLibros, int idUsuario)
+        public async Task InsertPedidoAsync(List<int> idLibros, int idUsuario)
         {
             int maxPedidoId = await this.context.Pedidos
                 .DefaultIfEmpty()
                 .MaxAsync(p => (int?)p.IdPedido) ?? 0;
+            int maxFactura = await this.context.Pedidos
+                .DefaultIfEmpty()
+                .MaxAsync(p => (int?)p.IdFactura) ?? 0;
 
             int nuevoPedidoId = maxPedidoId + 1;
+            int nuevaFactura = maxFactura + 1;
             DateTime fecha = DateTime.Now;
 
             foreach (int idLibro in idLibros)
@@ -70,12 +74,13 @@ namespace PracticaMvcCore2ACV.Repositories
                 Pedido pedido = new Pedido
                 {
                     IdPedido = nuevoPedidoId,
-                    IdFactura = 1,
+                    IdFactura = nuevaFactura,
                     Fecha = fecha,
                     IdLibro = idLibro,
                     IdUsuario = idUsuario,
                     Cantidad = 1
                 };
+                nuevoPedidoId += 1;
                 this.context.Pedidos.Add(pedido);
             }
 

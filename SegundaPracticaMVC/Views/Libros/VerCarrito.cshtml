@@ -6,10 +6,7 @@
 
 <h1>VerCarrito</h1>
 <p>
-    @if (Context.User.Identity.IsAuthenticated == false)
-    {
         <a asp-action="FinalizarCompra" asp-controller="Libros">Finalizar Compra</a>
-    }
 </p>
 
 @if (Model != null)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PracticaMvcCore2ACV.Extensions;
 using PracticaMvcCore2ACV.Models;
 using PracticaMvcCore2ACV.Repositories;
+using System.Security.Claims;
 
 namespace PracticaMvcCore2ACV.Controllers
 {
@@ -73,7 +74,6 @@ namespace PracticaMvcCore2ACV.Controllers
                     }
                     else
                     {
-                        //ACTUALIZAMOS SESSION
                         HttpContext.Session.SetObject("IDSLIBROSLIST", idsLibrosList);
                     }
                 }
@@ -91,8 +91,14 @@ namespace PracticaMvcCore2ACV.Controllers
         [AuthorizeUser]
         public async Task<IActionResult> FinalizarCompra()
         {
-            List<VistaPedidos> pedidos = await this.repo.VerPedidosAsync(HttpContext.Session.GetObject<Usuarios>("USER").IdUsuario);
+            string idUser = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            int idUsuario = int.Parse(idUser);
 
+            List<int> idsLibrosList = HttpContext.Session.GetObject<List<int>>("IDSLIBROSLIST");
+            await this.repo.InsertPedidoAsync(idsLibrosList, idUsuario);
+
+            List<VistaPedidos> pedidos = await this.repo.VerPedidosAsync(idUsuario);
+            HttpContext.Session.Remove("IDSLIBROSLIST");
             return View(pedidos);
         }
     }
